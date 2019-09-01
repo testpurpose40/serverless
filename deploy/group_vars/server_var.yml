@@ -1,0 +1,6 @@
+
+#ansible_port: 22
+#ansible_user: 'ec2-user'
+stackname: 'aws-lambda'
+bucketname: 'aws-lambda-bucket-test'
+

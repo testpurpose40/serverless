@@ -1,0 +1,6 @@
+---
+
+- name: delete the stack
+  cloudformation:
+    stack_name: "{{ stackname }}"
+    state: "absent"

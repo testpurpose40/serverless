@@ -1,0 +1,18 @@
+---
+- name: Test lambda locally event -start.
+  shell: 'sam local invoke startstopFunction --event start.json'
+  args:
+    chdir: '/git/serverless/deploy/lambda'
+  register: localtest
+
+- name: debug local lambda test
+  debug: var=localtest
+
+- name: Test lambda locally event -stop.
+  shell: 'sam local invoke startstopFunction --event stop.json'
+  args:
+    chdir: '/git/serverless/deploy/lambda'
+  register: localteststop
+
+- name: debug local lambda test
+  debug: var=localteststop

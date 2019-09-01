@@ -1,0 +1,15 @@
+---
+
+- name: Package SAM.
+  ignore_errors: no
+  shell: 'sam package --template-file template.yml --output-template-file deploy.yml --s3-bucket {{ bucketname }}'
+  args:
+    chdir: '/git/serverless/deploy/lambda'
+    executable: /bin/bash
+
+- name: Deploy SAM.
+  ignore_errors: no
+  shell: 'sam deploy --template-file deploy.yml --stack-name {{ stackname }}'
+  args:
+    chdir: '/git/serverless/deploy/lambda'
+    executable: /bin/bash

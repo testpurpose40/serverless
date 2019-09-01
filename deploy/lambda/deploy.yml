@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Start stop ec2 sam funtion.
+Globals:
+  Function:
+    Timeout: 120
+Resources:
+  startstopFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: start-stop-lambda
+      Description: Lambda funtion to start and stop ec2 instances in a region.
+      Handler: main.lambda_handler
+      Runtime: python3.7
+      CodeUri: s3://aws-lambda-bucket-test/0dab976e631da9aa3eac9295dbae7241
+      Role: arn:aws:iam::428225908682:role/ec2_startstop_role
+      Events:
+        StartEvent:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 23 ? * SUN-THUR *)
+            Name: start_ec2_instances
+            Description: Cron job to start ec2 instances
+            Input: '{ "action": "start" }'
+            Enabled: true
+        StopEvent:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 7 ? * MON-FRI *)
+            Name: stop_ec2_instances
+            Input: '{ "action": "stop" }'
+            Description: Cron job to stop ec2 instances
+            Enabled: true
+Outputs:
+  GetstartstopFunction:
+    Description: Get function Arn.
+    Value:
+      Fn::GetAtt:
+      - startstopFunction
+      - Arn
